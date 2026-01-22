@@ -6,11 +6,6 @@ public class Main {
         Supplier mainSupplier = new Supplier("Lenovo", "contact@lenovo.com");
         Inventory warehouse = new Inventory("Main Warehouse", 500);
 
-
-        warehouse.addProduct(new Product("Laptop", 400000.00, 15));
-        warehouse.addProduct(new Product("Mouse", 15000.00, 15));
-        warehouse.addProduct(new Electronics("Smartphone",300000.00,3,"Samsung"));
-
         System.out.println("System Setup");
         System.out.println(mainSupplier);
         System.out.println(warehouse.getLocation());
@@ -18,35 +13,49 @@ public class Main {
         boolean running  = true;
         while(running){
             System.out.println("inventory menu");
-            System.out.println("1. Display All Products");
-            System.out.println("2. Search product");
-            System.out.println("3. Filter low stock");
-            System.out.println("4. Sort by price");
-            System.out.println("5. Exit ");
+            System.out.println("1. Add Product");
+            System.out.println("2. Display All Products");
+            System.out.println("3. Search product");
+            System.out.println("4. Filter low stock");
+            System.out.println("5. Sort by price");
+            System.out.println("6. Exit ");
             System.out.print("choice: ");
+            try{
             int choice = sc.nextInt();
             sc.nextLine();
             switch (choice){
                 case 1:
-                    warehouse.displayAll();
+                    System.out.println("Enter name");
+                    String name = sc.nextLine();
+                    System.out.println("Enter price");
+                    double price = sc.nextDouble();
+                    System.out.println("Enter quantity");
+                    int quantity = sc.nextInt();
+                    warehouse.addProduct(new Product(name,price,quantity));
                     break;
                 case 2:
+                    warehouse.displayAll();
+                    break;
+                case 3:
                     System.out.println("Enter product name: ");
                     warehouse.searchbyName(sc.nextLine());
                     break;
-                case 3:
+                case 4:
                     System.out.println("Enter threshold: ");
                     warehouse.filterLowStock(sc.nextInt());
                     break;
-                case 4:
+                case 5:
                     warehouse.sortByPrice();
                     break;
-                case 5:
+                case 6:
                     running = false;
                     break;
                     default:
                         System.out.println("Invalid choice");
-            }
+            }}catch(Exception e){
+                System.out.println("Input error");
+                sc.nextLine();
+                }
         }
         sc.close();
     }
